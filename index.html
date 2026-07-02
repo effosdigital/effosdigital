@@ -79,9 +79,11 @@
     }
     .nav-logo {
       display: flex; align-items: center; gap: 14px;
+      max-width: 100%; min-width: 0;
     }
     .nav-logo img {
       height: 68px; width: 68px; object-fit: contain;
+      flex-shrink: 0;
       filter: drop-shadow(0 0 14px rgba(168,85,247,0.4));
       transition: transform 0.3s, height 0.3s ease, width 0.3s ease;
     }
@@ -89,17 +91,19 @@
     .nav-logo .nav-brand {
       font-family: 'Syne', sans-serif;
       font-weight: 800;
-      font-size: 1.32rem;
+      font-size: clamp(0.92rem, 4.6vw, 1.32rem);
       letter-spacing: -0.01em;
       color: var(--white);
       line-height: 1;
       white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      min-width: 0;
     }
     #navbar.scrolled .nav-logo img { height: 52px; width: 52px; }
-    #navbar.scrolled .nav-logo .nav-brand { font-size: 1.12rem; }
+    #navbar.scrolled .nav-logo .nav-brand { font-size: clamp(0.82rem, 4vw, 1.12rem); }
     @media (max-width: 480px) {
-      .nav-logo img { height: 52px; width: 52px; }
-      .nav-logo .nav-brand { font-size: 1.05rem; }
+      .nav-logo img { height: 44px; width: 44px; }
     }
 
     /* ===== HERO ===== */
