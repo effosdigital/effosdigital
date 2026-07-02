@@ -1,0 +1,194 @@
+/* =========================================================
+   Effos Digital — Painel Admin (identidade visual do site)
+   ========================================================= */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: 'Inter', sans-serif;
+  background: #111118;
+  color: #E8E8F0;
+  min-height: 100vh;
+  line-height: 1.6;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+button { font-family: inherit; cursor: pointer; }
+input, textarea {
+  font-family: inherit;
+  background: #1C1C28;
+  border: 1px solid #2A2A3D;
+  color: #E8E8F0;
+  border-radius: 10px;
+  padding: 11px 14px;
+  font-size: 0.92rem;
+  width: 100%;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus {
+  outline: none;
+  border-color: #A855F7;
+  box-shadow: 0 0 0 3px rgba(168,85,247,0.18);
+}
+textarea { resize: vertical; min-height: 64px; }
+
+:root {
+  --purple-deep:  #1A0A2E;
+  --purple-mid:   #3D1A6E;
+  --purple-vivid: #7B2FBE;
+  --purple-light: #A855F7;
+  --purple-glow:  #C084FC;
+  --gray-900: #111118;
+  --gray-800: #1C1C28;
+  --gray-700: #2A2A3D;
+  --gray-300: #9B9BB8;
+  --white: #FFFFFF;
+  --grad-cta: linear-gradient(135deg, #7B2FBE 0%, #A855F7 100%);
+  --grad-purple: linear-gradient(135deg, #7B2FBE, #A855F7, #C084FC);
+  --radius: 14px;
+}
+
+/* Fundo decorativo simples */
+.admin-bg {
+  position: fixed; inset: 0; z-index: -1;
+  background: radial-gradient(circle at 20% -10%, rgba(123,47,190,0.25), transparent 45%),
+              radial-gradient(circle at 90% 110%, rgba(168,85,247,0.15), transparent 45%),
+              #111118;
+}
+
+/* ---------- Layout genérico ---------- */
+.admin-shell { min-height: 100vh; display: flex; flex-direction: column; }
+
+.admin-topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 16px 28px;
+  border-bottom: 1px solid rgba(168,85,247,0.14);
+  background: rgba(17,17,24,0.85);
+  backdrop-filter: blur(14px);
+  position: sticky; top: 0; z-index: 50;
+}
+.admin-brand { display: flex; align-items: center; gap: 12px; }
+.admin-brand img { height: 38px; width: 38px; object-fit: contain; }
+.admin-brand span { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.05rem; }
+.admin-topbar .back-link { font-size: 0.82rem; color: var(--gray-300); }
+.admin-topbar .back-link:hover { color: var(--purple-light); }
+.admin-topbar nav { display: flex; align-items: center; gap: 18px; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.88rem;
+  padding: 11px 20px; border-radius: 10px; border: none;
+  transition: all 0.2s;
+}
+.btn-primary { background: var(--grad-cta); color: #fff; }
+.btn-primary:hover { filter: brightness(1.08); box-shadow: 0 0 20px rgba(168,85,247,0.35); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; filter: none; box-shadow: none; }
+.btn-ghost { background: transparent; border: 1px solid rgba(168,85,247,0.3); color: var(--purple-light); }
+.btn-ghost:hover { background: rgba(168,85,247,0.1); }
+.btn-danger { background: transparent; border: 1px solid rgba(239,68,68,0.4); color: #F87171; }
+.btn-danger:hover { background: rgba(239,68,68,0.1); }
+.btn-sm { padding: 7px 14px; font-size: 0.78rem; }
+.btn-block { width: 100%; }
+
+/* ---------- Tela de login / centralizada ---------- */
+.center-screen {
+  flex: 1; display: flex; align-items: center; justify-content: center;
+  padding: 40px 20px;
+}
+.auth-card {
+  width: 100%; max-width: 400px;
+  background: rgba(28,28,40,0.7);
+  border: 1px solid rgba(168,85,247,0.18);
+  border-radius: 20px;
+  padding: 36px 32px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+}
+.auth-logo { display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 26px; }
+.auth-logo img { height: 56px; width: 56px; object-fit: contain; filter: drop-shadow(0 0 14px rgba(168,85,247,0.4)); }
+.auth-logo strong { font-family: 'Syne', sans-serif; font-weight: 800; font-size: 1.2rem; }
+.auth-logo small { color: var(--gray-300); font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.08em; }
+
+.field { margin-bottom: 16px; }
+.field label { display: block; font-size: 0.8rem; color: var(--gray-300); margin-bottom: 6px; font-weight: 500; }
+.field-hint { font-size: 0.74rem; color: var(--gray-300); margin-top: 6px; line-height: 1.5; }
+
+.auth-links { display: flex; justify-content: space-between; margin-top: 16px; font-size: 0.8rem; }
+.auth-links button { background: none; border: none; color: var(--purple-light); font-size: 0.8rem; text-decoration: underline; }
+
+.alert {
+  border-radius: 10px; padding: 12px 14px; font-size: 0.82rem; margin-bottom: 16px;
+  display: none;
+}
+.alert.show { display: block; }
+.alert-error { background: rgba(239,68,68,0.1); border: 1px solid rgba(239,68,68,0.3); color: #FCA5A5; }
+.alert-success { background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.3); color: #86EFAC; }
+.alert-info { background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.3); color: var(--purple-light); }
+
+/* ---------- Dashboard ---------- */
+.admin-main { flex: 1; padding: 32px 5% 80px; max-width: 920px; margin: 0 auto; width: 100%; }
+.admin-main h1 { font-family: 'Syne', sans-serif; font-size: 1.5rem; margin-bottom: 6px; }
+.admin-main .subtitle { color: var(--gray-300); font-size: 0.9rem; margin-bottom: 28px; }
+
+.panel {
+  background: rgba(28,28,40,0.55);
+  border: 1px solid rgba(168,85,247,0.14);
+  border-radius: var(--radius);
+  padding: 24px 26px;
+  margin-bottom: 22px;
+}
+.panel h2 {
+  font-family: 'Syne', sans-serif; font-size: 1.05rem; font-weight: 700;
+  margin-bottom: 4px; display: flex; align-items: center; gap: 8px;
+}
+.panel .panel-desc { color: var(--gray-300); font-size: 0.82rem; margin-bottom: 18px; }
+
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+@media (max-width: 640px) { .grid-2, .grid-3 { grid-template-columns: 1fr; } }
+
+.stat-editor {
+  border: 1px solid rgba(168,85,247,0.14); border-radius: 12px;
+  padding: 16px; margin-bottom: 14px; background: rgba(17,17,24,0.4);
+}
+.stat-editor .stat-editor-title { font-size: 0.78rem; color: var(--purple-light); font-weight: 700; margin-bottom: 12px; text-transform: uppercase; letter-spacing: 0.06em; }
+
+/* Ícone / logo upload */
+.icon-row {
+  display: flex; align-items: center; gap: 14px;
+  border: 1px solid rgba(168,85,247,0.14);
+  border-radius: 12px; padding: 14px; margin-bottom: 12px;
+  background: rgba(17,17,24,0.4);
+}
+.icon-preview {
+  width: 48px; height: 48px; border-radius: 10px;
+  background: rgba(168,85,247,0.1); border: 1px solid rgba(168,85,247,0.25);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; flex-shrink: 0; overflow: hidden;
+}
+.icon-preview img { width: 100%; height: 100%; object-fit: contain; }
+.icon-meta { flex: 1; min-width: 0; }
+.icon-meta strong { font-size: 0.86rem; display: block; }
+.icon-meta span { font-size: 0.74rem; color: var(--gray-300); }
+.icon-actions { display: flex; gap: 8px; flex-shrink: 0; }
+.file-input-wrap { position: relative; overflow: hidden; display: inline-block; }
+.file-input-wrap input[type=file] {
+  position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+}
+
+.save-bar {
+  position: sticky; bottom: 0; z-index: 40;
+  background: rgba(17,17,24,0.92); backdrop-filter: blur(14px);
+  border-top: 1px solid rgba(168,85,247,0.16);
+  padding: 14px 5%; display: flex; align-items: center; justify-content: flex-end; gap: 12px;
+  margin-top: 8px;
+}
+.save-bar .save-status { margin-right: auto; font-size: 0.8rem; color: var(--gray-300); }
+
+.toast {
+  position: fixed; top: 20px; right: 20px; z-index: 999;
+  background: rgba(28,28,40,0.95); border: 1px solid rgba(34,197,94,0.35);
+  color: #86EFAC; padding: 12px 18px; border-radius: 10px; font-size: 0.85rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+  opacity: 0; transform: translateY(-10px); transition: all 0.3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }

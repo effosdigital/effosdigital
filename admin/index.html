@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="robots" content="noindex, nofollow"/>
+<title>Painel Admin · Effos Digital</title>
+<link rel="icon" type="image/png" href="../assets/images/logo.png"/>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"/>
+<link rel="stylesheet" href="admin.css"/>
+<!-- EmailJS: usado apenas se as chaves forem configuradas em "Conta e recuperação de senha" -->
+<script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+<div class="admin-bg"></div>
+
+<div class="admin-shell">
+
+  <!-- ============ LOGIN ============ -->
+  <div id="screen-login" class="center-screen">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="../assets/images/logo.png" alt="Effos Digital"/>
+        <strong>Effos Digital</strong>
+        <small>Painel administrativo</small>
+      </div>
+      <div id="login-alert" class="alert"></div>
+      <form id="login-form">
+        <div class="field">
+          <label for="login-password">Senha de acesso</label>
+          <input type="password" id="login-password" required autocomplete="current-password" placeholder="Digite sua senha"/>
+        </div>
+        <button type="submit" id="login-btn" class="btn btn-primary btn-block">Entrar</button>
+      </form>
+      <div class="auth-links">
+        <button type="button" id="go-forgot">Esqueci minha senha</button>
+        <a href="../index.html" style="color:var(--gray-300);font-size:0.8rem;">← Voltar ao site</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ESQUECI A SENHA ============ -->
+  <div id="screen-forgot" class="center-screen" style="display:none;">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="../assets/images/logo.png" alt="Effos Digital"/>
+        <strong>Recuperar senha</strong>
+        <small>Enviaremos um código de verificação</small>
+      </div>
+      <div id="forgot-alert" class="alert"></div>
+      <p style="font-size:0.85rem;color:var(--gray-300);margin-bottom:18px;">
+        Um código de 6 dígitos será enviado para <strong id="forgot-email-display" style="color:var(--purple-light)"></strong>.
+        Você pode alterar esse e-mail em "Conta e recuperação de senha" depois de entrar.
+      </p>
+      <form id="forgot-form">
+        <button type="submit" id="forgot-btn" class="btn btn-primary btn-block">Enviar código</button>
+      </form>
+      <div class="auth-links">
+        <button type="button" id="back-to-login-1">← Voltar ao login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ REDEFINIR SENHA ============ -->
+  <div id="screen-reset" class="center-screen" style="display:none;">
+    <div class="auth-card">
+      <div class="auth-logo">
+        <img src="../assets/images/logo.png" alt="Effos Digital"/>
+        <strong>Digite o código</strong>
+        <small>Válido por 10 minutos</small>
+      </div>
+      <div id="reset-alert" class="alert"></div>
+      <form id="reset-form">
+        <div class="field">
+          <label for="reset-code">Código de verificação</label>
+          <input type="text" id="reset-code" inputmode="numeric" maxlength="6" required placeholder="000000"/>
+        </div>
+        <div class="field">
+          <label for="reset-new-password">Nova senha</label>
+          <input type="password" id="reset-new-password" required minlength="6" placeholder="Mínimo 6 caracteres"/>
+        </div>
+        <div class="field">
+          <label for="reset-new-password-2">Confirmar nova senha</label>
+          <input type="password" id="reset-new-password-2" required minlength="6" placeholder="Repita a senha"/>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Redefinir senha</button>
+      </form>
+      <div class="auth-links">
+        <button type="button" id="back-to-login-2">← Voltar ao login</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ DASHBOARD ============ -->
+  <div id="screen-dashboard" style="display:none; flex-direction:column;">
+    <div class="admin-topbar">
+      <div class="admin-brand">
+        <img src="../assets/images/logo.png" alt="Effos Digital"/>
+        <span>Painel Effos Digital</span>
+      </div>
+      <nav>
+        <a class="back-link" href="../index.html" target="_blank">Ver site ↗</a>
+        <button id="logout-btn" class="btn btn-ghost btn-sm">Sair</button>
+      </nav>
+    </div>
+
+    <div class="admin-main">
+      <h1>Editar conteúdo do site</h1>
+      <p class="subtitle">As alterações são salvas neste navegador e aplicadas automaticamente na landing page.</p>
+
+      <!-- Publicar definitivamente -->
+      <div class="panel" style="border-color:rgba(34,197,94,0.35);">
+        <h2>🚀 Publicar alterações para todo mundo</h2>
+        <p class="panel-desc">
+          Tudo que você edita aqui fica salvo só neste navegador — outros visitantes não veem essas mudanças.
+          Para publicar de vez: edite tudo normalmente abaixo, clique em <strong>"Baixar data.js atualizado"</strong>,
+          e depois suba o arquivo baixado substituindo <code>assets/js/data.js</code> no seu repositório do GitHub
+          (pode subir direto pela interface web do GitHub, arrastando o arquivo). Assim que o GitHub Pages atualizar,
+          a mudança vale para qualquer pessoa que acessar o site.
+        </p>
+        <button type="button" id="export-data-btn" class="btn btn-primary">⬇️ Baixar data.js atualizado</button>
+      </div>
+
+      <!-- Marca -->
+      <div class="panel">
+        <h2>🔮 Marca</h2>
+        <p class="panel-desc">Nome exibido ao lado do logo no topo, e a logo usada no menu e no linktree.</p>
+        <div class="field">
+          <label for="f-brand-name">Nome da marca</label>
+          <input type="text" id="f-brand-name"/>
+        </div>
+        <div class="icon-row">
+          <div class="icon-preview" id="preview-logo"></div>
+          <div class="icon-meta">
+            <strong>Logo</strong>
+            <span>Recomendado: PNG ou SVG quadrado, fundo transparente, mínimo 256×256px (ideal 512×512px).</span>
+          </div>
+          <div class="icon-actions">
+            <label class="btn btn-ghost btn-sm file-input-wrap">Trocar<input type="file" id="upload-logo" accept="image/*"/></label>
+            <button type="button" id="remove-logo" class="btn btn-danger btn-sm">Usar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Hero -->
+      <div class="panel">
+        <h2>🚀 Seção principal (Hero)</h2>
+        <p class="panel-desc">Selo, título e subtítulo exibidos no topo da página.</p>
+        <div class="field">
+          <label for="f-hero-badge">Selo (badge)</label>
+          <input type="text" id="f-hero-badge"/>
+        </div>
+        <div class="grid-3">
+          <div class="field">
+            <label for="f-hero-title1">Título — linha 1</label>
+            <input type="text" id="f-hero-title1"/>
+          </div>
+          <div class="field">
+            <label for="f-hero-accent">Título — destaque (gradiente)</label>
+            <input type="text" id="f-hero-accent"/>
+          </div>
+          <div class="field">
+            <label for="f-hero-title2">Título — linha 3</label>
+            <input type="text" id="f-hero-title2"/>
+          </div>
+        </div>
+        <div class="field">
+          <label for="f-hero-sub">Subtítulo</label>
+          <textarea id="f-hero-sub"></textarea>
+        </div>
+      </div>
+
+      <!-- Estatísticas -->
+      <div class="panel">
+        <h2>📈 Estatísticas animadas</h2>
+        <p class="panel-desc">Contador crescente + texto digitado ao lado, exibidos logo abaixo do Hero.</p>
+
+        <div class="stat-editor">
+          <div class="stat-editor-title">Estatística 1</div>
+          <div class="grid-3">
+            <div class="field"><label>Prefixo</label><input type="text" id="f-stat-prefix-0" placeholder="ex: +"/></div>
+            <div class="field"><label>Número</label><input type="number" id="f-stat-value-0"/></div>
+            <div class="field"><label>Sufixo</label><input type="text" id="f-stat-suffix-0" placeholder="ex: %"/></div>
+          </div>
+          <div class="field"><label>Texto ao lado (digitação)</label><input type="text" id="f-stat-text-0"/></div>
+        </div>
+
+        <div class="stat-editor">
+          <div class="stat-editor-title">Estatística 2</div>
+          <div class="grid-3">
+            <div class="field"><label>Prefixo</label><input type="text" id="f-stat-prefix-1"/></div>
+            <div class="field"><label>Número</label><input type="number" id="f-stat-value-1"/></div>
+            <div class="field"><label>Sufixo</label><input type="text" id="f-stat-suffix-1"/></div>
+          </div>
+          <div class="field"><label>Texto ao lado (digitação)</label><input type="text" id="f-stat-text-1"/></div>
+        </div>
+
+        <div class="stat-editor">
+          <div class="stat-editor-title">Estatística 3</div>
+          <div class="grid-3">
+            <div class="field"><label>Prefixo</label><input type="text" id="f-stat-prefix-2"/></div>
+            <div class="field"><label>Número</label><input type="number" id="f-stat-value-2"/></div>
+            <div class="field"><label>Sufixo</label><input type="text" id="f-stat-suffix-2"/></div>
+          </div>
+          <div class="field"><label>Texto ao lado (digitação)</label><input type="text" id="f-stat-text-2"/></div>
+        </div>
+      </div>
+
+      <!-- Linktree -->
+      <div class="panel">
+        <h2>🔗 Linktree (canais de contato)</h2>
+        <p class="panel-desc">Bio, localização e os 3 links de contato exibidos como botões.</p>
+
+        <div class="grid-2">
+          <div class="field"><label for="f-lt-bio1">Bio — linha 1</label><input type="text" id="f-lt-bio1"/></div>
+          <div class="field"><label for="f-lt-bio2">Bio — linha 2</label><input type="text" id="f-lt-bio2"/></div>
+        </div>
+        <div class="field"><label for="f-lt-location">Localização</label><input type="text" id="f-lt-location"/></div>
+
+        <hr style="border:none;border-top:1px solid rgba(168,85,247,0.14);margin:18px 0;"/>
+
+        <div class="grid-2">
+          <div class="field"><label for="f-wpp-number">WhatsApp — número (DDI+DDD+número)</label><input type="text" id="f-wpp-number" placeholder="5591988226592"/></div>
+          <div class="field"><label for="f-wpp-label">WhatsApp — texto do botão</label><input type="text" id="f-wpp-label"/></div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-preview" id="preview-wpp"></div>
+          <div class="icon-meta"><strong>Ícone do WhatsApp</strong><span>Recomendado: PNG/SVG quadrado, fundo transparente, 128×128px.</span></div>
+          <div class="icon-actions">
+            <label class="btn btn-ghost btn-sm file-input-wrap">Trocar<input type="file" id="upload-wpp" accept="image/*"/></label>
+            <button type="button" id="remove-wpp" class="btn btn-danger btn-sm">Usar padrão</button>
+          </div>
+        </div>
+
+        <div class="grid-2">
+          <div class="field"><label for="f-ig-handle">Instagram — usuário (sem @)</label><input type="text" id="f-ig-handle" placeholder="effosdigital"/></div>
+          <div class="field"><label for="f-ig-label">Instagram — texto do botão</label><input type="text" id="f-ig-label"/></div>
+        </div>
+        <div class="icon-row">
+          <div class="icon-preview" id="preview-ig"></div>
+          <div class="icon-meta"><strong>Ícone do Instagram</strong><span>Recomendado: PNG/SVG quadrado, fundo transparente, 128×128px.</span></div>
+          <div class="icon-actions">
+            <label class="btn btn-ghost btn-sm file-input-wrap">Trocar<input type="file" id="upload-ig" accept="image/*"/></label>
+            <button type="button" id="remove-ig" class="btn btn-danger btn-sm">Usar padrão</button>
+          </div>
+        </div>
+
+        <div class="field"><label for="f-email-address">E-mail de contato</label><input type="email" id="f-email-address" placeholder="effosdigital@gmail.com"/></div>
+        <div class="icon-row">
+          <div class="icon-preview" id="preview-email"></div>
+          <div class="icon-meta"><strong>Ícone de e-mail</strong><span>Recomendado: PNG/SVG quadrado, fundo transparente, 128×128px.</span></div>
+          <div class="icon-actions">
+            <label class="btn btn-ghost btn-sm file-input-wrap">Trocar<input type="file" id="upload-email" accept="image/*"/></label>
+            <button type="button" id="remove-email" class="btn btn-danger btn-sm">Usar padrão</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vídeos -->
+      <div class="panel">
+        <h2>🎬 Carrossel de vídeos</h2>
+        <p class="panel-desc">
+          Cole links de vídeos do YouTube (funciona também com vídeos "não listados") para exibi-los em um carrossel na página.
+          Se não houver nenhum vídeo cadastrado, a seção fica oculta automaticamente.
+        </p>
+        <div class="grid-2">
+          <div class="field"><label for="f-videos-title">Título da seção</label><input type="text" id="f-videos-title" placeholder="Vídeos"/></div>
+          <div class="field"><label for="f-videos-subtitle">Subtítulo da seção</label><input type="text" id="f-videos-subtitle" placeholder="Confira nossos conteúdos em destaque"/></div>
+        </div>
+        <div id="videos-list"></div>
+        <button type="button" id="add-video-btn" class="btn btn-ghost btn-sm">+ Adicionar vídeo</button>
+      </div>
+
+      <!-- Rodapé -->
+      <div class="panel">
+        <h2>📄 Rodapé</h2>
+        <div class="field">
+          <label for="f-footer">Texto do rodapé</label>
+          <input type="text" id="f-footer"/>
+        </div>
+      </div>
+
+      <!-- Conta e recuperação -->
+      <div class="panel">
+        <h2>🔐 Conta e recuperação de senha</h2>
+        <p class="panel-desc">
+          Este site é 100% estático (sem servidor próprio), então o envio real de e-mail de recuperação depende do
+          <a href="https://www.emailjs.com" target="_blank" style="color:var(--purple-light);">EmailJS</a>
+          (plano gratuito disponível). Crie uma conta lá, configure um serviço de e-mail e um template com a variável
+          <code>{{code}}</code>, e cole as chaves abaixo. Sem essa configuração, o código de recuperação aparece na tela
+          em "modo de teste" para você não ficar sem acesso.
+        </p>
+        <div id="account-alert" class="alert"></div>
+        <form id="account-form">
+          <div class="field">
+            <label for="acc-recovery-email">E-mail de recuperação</label>
+            <input type="email" id="acc-recovery-email"/>
+          </div>
+          <div class="grid-3">
+            <div class="field"><label for="acc-emailjs-service">EmailJS — Service ID</label><input type="text" id="acc-emailjs-service"/></div>
+            <div class="field"><label for="acc-emailjs-template">EmailJS — Template ID</label><input type="text" id="acc-emailjs-template"/></div>
+            <div class="field"><label for="acc-emailjs-key">EmailJS — Public Key</label><input type="text" id="acc-emailjs-key"/></div>
+          </div>
+          <div class="field">
+            <label for="acc-new-password">Alterar senha (opcional)</label>
+            <input type="password" id="acc-new-password" minlength="6" placeholder="Deixe em branco para não alterar"/>
+          </div>
+          <button type="submit" class="btn btn-primary">Salvar configurações da conta</button>
+        </form>
+      </div>
+
+      <div class="panel">
+        <h2>⚠️ Zona de risco</h2>
+        <p class="panel-desc">Restaura todos os textos e ícones para o padrão original do site.</p>
+        <button id="reset-defaults-btn" class="btn btn-danger">Restaurar conteúdo padrão</button>
+      </div>
+    </div>
+
+    <div class="save-bar">
+      <span class="save-status">As alterações só valem depois de salvar.</span>
+      <button id="save-btn" class="btn btn-primary">Salvar alterações</button>
+    </div>
+  </div>
+
+</div>
+
+<div id="toast" class="toast"></div>
+
+<script src="../assets/js/data.js"></script>
+<script src="auth.js"></script>
+<script src="admin.js"></script>
+</body>
+</html>

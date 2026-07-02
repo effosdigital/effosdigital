@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Effos Digital — SaaS de CRM, ChatBots e Agentes de IA. Conheça nossos produtos e entre em contato."/>
+  <title>Effos Digital</title>
+  <link rel="icon" type="image/png" href="assets/images/logo.png"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap"/>
+  <style>
+    /* ===== RESET & BASE ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #111118;
+      color: #E8E8F0;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: #111118; }
+    ::-webkit-scrollbar-thumb { background: #7B2FBE; border-radius: 3px; }
+
+    /* ===== CSS VARS ===== */
+    :root {
+      --purple-deep:  #1A0A2E;
+      --purple-mid:   #3D1A6E;
+      --purple-vivid: #7B2FBE;
+      --purple-light: #A855F7;
+      --purple-glow:  #C084FC;
+      --gray-900:     #111118;
+      --gray-800:     #1C1C28;
+      --gray-700:     #2A2A3D;
+      --gray-300:     #9B9BB8;
+      --gray-100:     #E8E8F0;
+      --white:        #FFFFFF;
+      --grad-hero:    linear-gradient(135deg, #1A0A2E 0%, #3D1A6E 50%, #1A0A2E 100%);
+      --grad-purple:  linear-gradient(135deg, #7B2FBE, #A855F7, #C084FC);
+      --grad-cta:     linear-gradient(135deg, #7B2FBE 0%, #A855F7 100%);
+      --shadow-glow:  0 0 40px rgba(168,85,247,0.25);
+      --shadow-card:  0 8px 32px rgba(0,0,0,0.4);
+      --radius:       16px;
+      --radius-lg:    28px;
+    }
+
+    /* ===== NOISE ===== */
+    body::before {
+      content: '';
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none; opacity: 0.3;
+    }
+
+    /* ===== CURSOR GLOW ===== */
+    #cursor-glow {
+      position: fixed; width: 420px; height: 420px;
+      background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
+      border-radius: 50%; pointer-events: none; z-index: 0;
+      transform: translate(-50%, -50%);
+      transition: left 0.12s ease, top 0.12s ease;
+    }
+
+    /* ===== NAVBAR ===== */
+    #navbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      padding: 20px 5%;
+      display: flex; align-items: center; justify-content: center;
+      transition: all 0.4s ease;
+    }
+    #navbar.scrolled {
+      background: rgba(17,17,24,0.92);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(168,85,247,0.15);
+      padding: 14px 5%;
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 14px;
+    }
+    .nav-logo img {
+      height: 68px; width: 68px; object-fit: contain;
+      filter: drop-shadow(0 0 14px rgba(168,85,247,0.4));
+      transition: transform 0.3s, height 0.3s ease, width 0.3s ease;
+    }
+    .nav-logo:hover img { transform: scale(1.06); }
+    .nav-logo .nav-brand {
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: 1.32rem;
+      letter-spacing: -0.01em;
+      color: var(--white);
+      line-height: 1;
+      white-space: nowrap;
+    }
+    #navbar.scrolled .nav-logo img { height: 52px; width: 52px; }
+    #navbar.scrolled .nav-logo .nav-brand { font-size: 1.12rem; }
+    @media (max-width: 480px) {
+      .nav-logo img { height: 52px; width: 52px; }
+      .nav-logo .nav-brand { font-size: 1.05rem; }
+    }
+
+    /* ===== HERO ===== */
+    #hero {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      position: relative; overflow: hidden;
+      background: var(--grad-hero);
+      padding: 130px 5% 80px;
+    }
+
+    /* Orbs */
+    .orb {
+      position: absolute; border-radius: 50%;
+      filter: blur(80px); pointer-events: none;
+    }
+    .orb-1 { width: 650px; height: 650px; background: rgba(123,47,190,0.28); top: -160px; right: -120px; animation: floatOrb 9s ease-in-out infinite; }
+    .orb-2 { width: 420px; height: 420px; background: rgba(168,85,247,0.18); bottom: -120px; left: -60px; animation: floatOrb 11s ease-in-out infinite reverse; }
+    .orb-3 { width: 280px; height: 280px; background: rgba(192,132,252,0.12); top: 38%; left: 38%; animation: floatOrb 13s ease-in-out infinite 2s; }
+
+    @keyframes floatOrb {
+      0%,100% { transform: translate(0,0) scale(1); }
+      33%      { transform: translate(22px,-28px) scale(1.04); }
+      66%      { transform: translate(-16px,18px) scale(0.96); }
+    }
+
+    .hero-inner {
+      position: relative; z-index: 2;
+      max-width: 780px; margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(168,85,247,0.12);
+      border: 1px solid rgba(168,85,247,0.28);
+      padding: 8px 20px; border-radius: 50px;
+      font-size: 0.78rem; font-weight: 600; color: var(--purple-light);
+      letter-spacing: 0.07em; text-transform: uppercase;
+      margin-bottom: 28px;
+      animation: fadeSlideUp 0.8s ease both;
+    }
+    .badge-dot { width: 7px; height: 7px; background: var(--purple-light); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.75)} }
+
+    .hero-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(2.6rem, 6vw, 4.4rem);
+      font-weight: 800; line-height: 1.08;
+      letter-spacing: -0.025em; color: var(--white);
+      animation: fadeSlideUp 0.9s ease 0.1s both;
+    }
+    .hero-title .accent {
+      background: var(--grad-purple);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .hero-sub {
+      margin-top: 22px;
+      font-size: 1.1rem; color: var(--gray-300); line-height: 1.75;
+      max-width: 580px; margin-left: auto; margin-right: auto;
+      animation: fadeSlideUp 1s ease 0.2s both;
+    }
+
+    /* ===== ESTATÍSTICAS ANIMADAS (abaixo do hero) ===== */
+    #stats-rows {
+      position: relative; z-index: 1;
+      padding: 64px 5% 76px;
+      background: linear-gradient(180deg, #1A0A2E 0%, #150A26 100%);
+      border-top: 1px solid rgba(168,85,247,0.12);
+    }
+    .stats-inner {
+      max-width: 860px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .stat-row {
+      display: flex; align-items: center; gap: 28px;
+      padding: 26px 8px;
+      border-bottom: 1px solid rgba(168,85,247,0.14);
+    }
+    .stat-row:last-child { border-bottom: none; }
+
+    .stat-number {
+      flex: 0 0 auto;
+      min-width: 160px;
+      font-family: 'Syne', sans-serif;
+      font-weight: 800;
+      font-size: clamp(2.1rem, 5vw, 3rem);
+      line-height: 1;
+      background: var(--grad-purple);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      display: flex; align-items: baseline; gap: 2px;
+      white-space: nowrap;
+    }
+
+    .stat-divider {
+      flex: 0 0 auto;
+      width: 1px; align-self: stretch;
+      background: linear-gradient(180deg, transparent, rgba(168,85,247,0.35), transparent);
+    }
+
+    .stat-typewriter {
+      flex: 1 1 auto;
+      font-size: 1.05rem; color: var(--gray-100);
+      line-height: 1.5;
+    }
+    .stat-typewriter .tw-cursor {
+      display: inline-block;
+      color: var(--purple-light);
+      animation: twBlink 0.9s step-end infinite;
+      margin-left: 2px;
+    }
+    @keyframes twBlink { 0%,100% { opacity: 1; } 50% { opacity: 0; } }
+
+    @media (max-width: 640px) {
+      .stat-row { flex-direction: column; align-items: flex-start; gap: 10px; }
+      .stat-divider { display: none; }
+      .stat-number { min-width: 0; }
+    }
+
+    /* ===== DIVIDER ===== */
+    .section-divider {
+      position: relative; z-index: 1;
+      padding: 0 5%;
+      background: linear-gradient(180deg, #1A0A2E 0%, #111118 100%);
+    }
+    .divider-inner {
+      max-width: 780px; margin: 0 auto;
+      display: flex; align-items: center; gap: 16px;
+      padding: 0;
+    }
+    .divider-line { flex: 1; height: 1px; background: linear-gradient(90deg, transparent, rgba(168,85,247,0.3), transparent); }
+    .divider-label {
+      font-family: 'Syne', sans-serif;
+      font-size: 0.72rem; font-weight: 700;
+      color: var(--purple-light); letter-spacing: 0.12em; text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    /* ===== VÍDEOS ===== */
+    #videos {
+      position: relative; z-index: 1;
+      padding: 8px 5% 8px;
+      background: linear-gradient(180deg, #1A0A2E 0%, #111118 100%);
+    }
+    .videos-inner {
+      max-width: 960px; margin: 0 auto;
+      text-align: center;
+      padding: 44px 0 64px;
+    }
+    .videos-title {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.5rem, 4vw, 2.1rem);
+      font-weight: 800; color: var(--white);
+      margin-bottom: 8px;
+    }
+    .videos-subtitle {
+      color: var(--gray-300); font-size: 0.95rem;
+      margin-bottom: 32px;
+    }
+    .video-carousel {
+      display: flex; gap: 18px;
+      overflow-x: auto; scroll-snap-type: x mandatory;
+      padding: 4px 4px 20px;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: thin;
+      scrollbar-color: var(--purple-vivid) transparent;
+    }
+    .video-carousel::-webkit-scrollbar { height: 6px; }
+    .video-carousel::-webkit-scrollbar-track { background: transparent; }
+    .video-carousel::-webkit-scrollbar-thumb { background: var(--purple-vivid); border-radius: 3px; }
+    .video-card {
+      flex: 0 0 auto;
+      width: min(340px, 80vw);
+      scroll-snap-align: center;
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--gray-800);
+      border: 1px solid rgba(168,85,247,0.18);
+      box-shadow: var(--shadow-card);
+      text-align: left;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+    .video-card:hover { transform: translateY(-4px); border-color: rgba(168,85,247,0.4); }
+    .video-frame-wrap { position: relative; width: 100%; padding-top: 56.25%; background: #000; }
+    .video-frame-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+    .video-card-title {
+      padding: 12px 14px;
+      font-size: 0.86rem; font-weight: 600; color: var(--gray-100);
+      line-height: 1.4;
+    }
+    .video-carousel-nav {
+      display: flex; justify-content: center; gap: 12px; margin-top: 4px;
+    }
+    .video-nav-btn {
+      width: 38px; height: 38px; border-radius: 50%;
+      background: rgba(168,85,247,0.1);
+      border: 1px solid rgba(168,85,247,0.28);
+      color: var(--purple-light);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem; cursor: pointer; transition: all 0.25s;
+    }
+    .video-nav-btn:hover { background: var(--grad-cta); color: #fff; border-color: transparent; }
+    @media (max-width: 640px) {
+      .video-carousel-nav { display: none; }
+    }
+
+    /* ===== LINKTREE ===== */
+    #linktree {
+      position: relative; z-index: 1;
+      padding: 60px 5% 80px;
+      background: linear-gradient(180deg, #111118 0%, #1A0A2E 50%, #111118 100%);
+    }
+
+    /* Orbs linktree */
+    .lt-orb-1 { position: absolute; width: 500px; height: 500px; border-radius: 50%; background: rgba(123,47,190,0.12); filter: blur(80px); top: 50%; left: 50%; transform: translate(-50%,-50%); pointer-events: none; animation: floatOrb 10s ease-in-out infinite; }
+
+    .lt-inner {
+      max-width: 480px; margin: 0 auto;
+      text-align: center; position: relative; z-index: 2;
+    }
+
+    .lt-avatar {
+      width: 96px; height: 96px; border-radius: 50%;
+      margin: 0 auto 18px;
+      background: var(--grad-cta);
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 0 40px rgba(168,85,247,0.45), 0 0 0 4px rgba(168,85,247,0.15);
+      overflow: hidden;
+      animation: fadeSlideUp 0.8s ease both;
+    }
+    .lt-avatar img { width: 100%; height: 100%; object-fit: contain; padding: 10px; }
+
+    .lt-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem; font-weight: 800; color: var(--white);
+      margin-bottom: 6px;
+      animation: fadeSlideUp 0.9s ease 0.1s both;
+    }
+    .lt-bio {
+      font-size: 0.88rem; color: var(--gray-300); line-height: 1.65;
+      margin-bottom: 36px;
+      animation: fadeSlideUp 1s ease 0.15s both;
+    }
+
+    /* Links */
+    .lt-links { display: flex; flex-direction: column; gap: 12px; }
+
+    .lt-link {
+      display: flex; align-items: center; justify-content: center; gap: 12px;
+      padding: 16px 24px; border-radius: 16px;
+      font-family: 'Syne', sans-serif; font-weight: 700; font-size: 0.95rem;
+      transition: all 0.3s; border: 1px solid transparent;
+      position: relative; overflow: hidden;
+    }
+    .lt-link::before {
+      content: ''; position: absolute; inset: 0;
+      background: rgba(255,255,255,0.06);
+      opacity: 0; transition: opacity 0.3s;
+    }
+    .lt-link:hover::before { opacity: 1; }
+    .lt-link:hover { transform: translateY(-3px) scale(1.01); }
+
+    .lt-link .lt-icon { font-size: 1.2rem; flex-shrink: 0; }
+    .lt-link .lt-arrow { margin-left: auto; font-size: 0.85rem; opacity: 0.6; transition: transform 0.3s; }
+    .lt-link:hover .lt-arrow { transform: translateX(3px); opacity: 1; }
+
+    .lt-wpp  { background: linear-gradient(135deg, #1DAA61, #128C48); color: #fff; }
+    .lt-wpp:hover  { box-shadow: 0 0 32px rgba(29,170,97,0.4); }
+    .lt-ig   { background: linear-gradient(135deg, #E1306C, #833AB4, #F77737); color: #fff; }
+    .lt-ig:hover   { box-shadow: 0 0 32px rgba(225,48,108,0.4); }
+    .lt-email {
+      background: transparent;
+      border-color: rgba(168,85,247,0.3);
+      color: var(--purple-light);
+    }
+    .lt-email:hover { background: rgba(168,85,247,0.08); border-color: var(--purple-light); }
+    .lt-icon img, .soc-btn img { width: 1.3em; height: 1.3em; object-fit: contain; border-radius: 4px; }
+    .soc-btn img { width: 22px; height: 22px; border-radius: 5px; }
+
+    /* Social row */
+    .lt-social {
+      display: flex; gap: 12px; justify-content: center;
+      margin-top: 32px;
+    }
+    .soc-btn {
+      width: 46px; height: 46px; border-radius: 50%;
+      background: rgba(168,85,247,0.1);
+      border: 1px solid rgba(168,85,247,0.22);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; transition: all 0.3s; cursor: pointer;
+    }
+    .soc-btn:hover { background: var(--grad-cta); border-color: transparent; transform: translateY(-3px); box-shadow: 0 0 20px rgba(168,85,247,0.4); }
+
+    /* ===== FOOTER ===== */
+    footer {
+      position: relative; z-index: 1;
+      background: var(--gray-900);
+      border-top: 1px solid rgba(168,85,247,0.1);
+      padding: 28px 5%;
+      text-align: center;
+    }
+    .footer-copy { font-size: 0.8rem; color: var(--gray-300); }
+    .footer-copy span { color: var(--purple-light); }
+    .footer-admin-link { margin-top: 8px; }
+    .footer-admin-link a {
+      font-size: 0.7rem; color: var(--gray-700);
+      transition: color 0.25s;
+    }
+    .footer-admin-link a:hover { color: var(--purple-light); }
+
+    /* ===== ANIMATIONS ===== */
+    @keyframes fadeSlideUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .reveal {
+      opacity: 0; transform: translateY(28px);
+      transition: opacity 0.65s ease, transform 0.65s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.08s; }
+    .reveal-d2 { transition-delay: 0.16s; }
+    .reveal-d3 { transition-delay: 0.24s; }
+    .reveal-d4 { transition-delay: 0.32s; }
+    .reveal-d5 { transition-delay: 0.40s; }
+    .reveal-d6 { transition-delay: 0.48s; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 600px) {
+      .lt-link { font-size: 0.88rem; padding: 14px 18px; }
+    }
+
+    /* Compacta espaçamentos e evita a sensação de "zoom" excessivo em telas de celular */
+    @media (max-width: 640px) {
+      #hero { padding: 104px 6% 56px; min-height: 0; }
+      .hero-sub { margin-top: 16px; font-size: 1rem; }
+      .hero-badge { margin-bottom: 18px; padding: 7px 16px; }
+      #stats-rows { padding: 40px 6% 48px; }
+      .stats-inner { gap: 4px; }
+      .stat-row { padding: 18px 4px; gap: 6px; }
+      .section-divider { padding: 0 6%; }
+      .videos-inner { padding: 28px 0 40px; }
+      .videos-subtitle { margin-bottom: 22px; }
+      #linktree { padding: 40px 6% 56px; }
+      .lt-avatar { width: 80px; height: 80px; margin-bottom: 14px; }
+      .lt-bio { margin-bottom: 26px; }
+      .lt-links { gap: 10px; }
+      footer { padding: 20px 6%; }
+    }
+    @media (max-width: 400px) {
+      #hero { padding: 96px 6% 44px; }
+      .hero-title { font-size: clamp(2.15rem, 8.5vw, 4.4rem); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor-glow"></div>
+
+<!-- ===== NAVBAR ===== -->
+<nav id="navbar">
+  <a href="#" class="nav-logo">
+    <img id="nav-logo-img" src="assets/images/logo.png" alt="Effos Digital"/>
+    <span id="nav-brand-name" class="nav-brand">Effos Digital</span>
+  </a>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="hero">
+  <div class="orb orb-1"></div>
+  <div class="orb orb-2"></div>
+  <div class="orb orb-3"></div>
+
+  <div class="hero-inner">
+    <div id="hero-badge" class="hero-badge">
+      <span class="badge-dot"></span>
+      <span id="hero-badge-text">Plataforma #1 em Automação IA no Brasil</span>
+    </div>
+
+    <h1 class="hero-title">
+      <span id="hero-title-line1">Seu negócio no</span><br/>
+      <span id="hero-title-accent" class="accent">piloto automático</span><br/>
+      <span id="hero-title-line2">com IA real.</span>
+    </h1>
+
+    <p id="hero-sub" class="hero-sub">
+      CRM inteligente, ChatBots para WhatsApp e Agentes de IA que atendem, qualificam e fecham vendas enquanto você dorme.
+    </p>
+  </div>
+</section>
+
+<!-- ===== ESTATÍSTICAS ANIMADAS ===== -->
+<section id="stats-rows">
+  <div class="stats-inner" id="stats-rows-container">
+    <!-- linhas geradas dinamicamente via JS a partir de assets/js/data.js -->
+  </div>
+</section>
+
+<!-- ===== VÍDEOS ===== -->
+<section id="videos" style="display:none;">
+  <div class="section-divider">
+    <div class="divider-inner">
+      <div class="divider-line"></div>
+      <div class="divider-label" id="videos-divider-label">Vídeos</div>
+      <div class="divider-line"></div>
+    </div>
+  </div>
+  <div class="videos-inner">
+    <h2 id="videos-title" class="videos-title">Vídeos</h2>
+    <p id="videos-subtitle" class="videos-subtitle">Confira nossos conteúdos em destaque</p>
+    <div class="video-carousel" id="video-carousel"><!-- gerado via JS a partir de assets/js/data.js --></div>
+    <div class="video-carousel-nav">
+      <button type="button" class="video-nav-btn" id="video-nav-prev" aria-label="Vídeo anterior">←</button>
+      <button type="button" class="video-nav-btn" id="video-nav-next" aria-label="Próximo vídeo">→</button>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIVIDER ===== -->
+<div class="section-divider">
+  <div class="divider-inner">
+    <div class="divider-line"></div>
+    <div class="divider-label">Nossos canais</div>
+    <div class="divider-line"></div>
+  </div>
+</div>
+
+<!-- ===== LINKTREE ===== -->
+<section id="linktree">
+  <div class="lt-orb-1"></div>
+  <div class="lt-inner">
+
+    <div class="lt-avatar reveal">
+      <img id="lt-logo-img" src="assets/images/logo.png" alt="Effos Digital"/>
+    </div>
+
+    <div id="lt-name" class="lt-name reveal reveal-d1">Effos Digital</div>
+    <div class="lt-bio reveal reveal-d2">
+      <span id="lt-bio-line1">🚀 SaaS de CRM, ChatBots e Agentes de IA</span><br/>
+      <span id="lt-bio-line2">para negócios que querem crescer de verdade.</span><br/>
+      <span id="lt-bio-location" style="color:var(--purple-light);font-size:0.82rem">Belém, PA — Brasil 🇧🇷</span>
+    </div>
+
+    <div class="lt-links">
+      <a id="lt-wpp-link" href="https://wa.me/5591988226592" target="_blank" class="lt-link lt-wpp reveal reveal-d1">
+        <span id="lt-wpp-icon" class="lt-icon">💬</span>
+        <span id="lt-wpp-label">Falar no WhatsApp</span>
+        <span class="lt-arrow">→</span>
+      </a>
+      <a id="lt-ig-link" href="https://instagram.com/effosdigital" target="_blank" class="lt-link lt-ig reveal reveal-d2">
+        <span id="lt-ig-icon" class="lt-icon">📸</span>
+        <span id="lt-ig-label">Seguir no Instagram</span>
+        <span class="lt-arrow">→</span>
+      </a>
+      <a id="lt-email-link" href="mailto:effosdigital@gmail.com" class="lt-link lt-email reveal reveal-d3">
+        <span id="lt-email-icon" class="lt-icon">📧</span>
+        <span id="lt-email-label">effosdigital@gmail.com</span>
+        <span class="lt-arrow">→</span>
+      </a>
+    </div>
+
+    <div class="lt-social reveal">
+      <a id="soc-wpp-link" href="https://wa.me/5591988226592" target="_blank" class="soc-btn" title="WhatsApp"><span id="soc-wpp-icon">💬</span></a>
+      <a id="soc-ig-link" href="https://instagram.com/effosdigital" target="_blank" class="soc-btn" title="Instagram"><span id="soc-ig-icon">📸</span></a>
+      <a id="soc-email-link" href="mailto:effosdigital@gmail.com" class="soc-btn" title="E-mail"><span id="soc-email-icon">📧</span></a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer>
+  <div class="footer-copy" id="footer-copy">
+    © 2025 Effos Digital · Feito com <span>♥</span> e muita IA no Brasil 🇧🇷
+  </div>
+  <div class="footer-admin-link">
+    <a href="admin/index.html">Área administrativa</a>
+  </div>
+</footer>
+
+<script src="assets/js/data.js"></script>
+<script src="assets/js/site.js"></script>
+</body>
+</html>
