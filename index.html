@@ -11,7 +11,7 @@
   <style>
     /* ===== RESET & BASE ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
+    html { scroll-behavior: smooth; overflow-x: hidden; max-width: 100%; }
     body {
       font-family: 'Inter', sans-serif;
       background: #111118;
@@ -58,10 +58,16 @@
     /* ===== CURSOR GLOW ===== */
     #cursor-glow {
       position: fixed; width: 420px; height: 420px;
+      left: -9999px; top: -9999px;
       background: radial-gradient(circle, rgba(168,85,247,0.07) 0%, transparent 70%);
       border-radius: 50%; pointer-events: none; z-index: 0;
       transform: translate(-50%, -50%);
       transition: left 0.12s ease, top 0.12s ease;
+    }
+    /* Em telas de toque não existe cursor de mouse — remove o elemento
+       para eliminar qualquer chance de ele "vazar" para fora da viewport */
+    @media (hover: none), (pointer: coarse) {
+      #cursor-glow { display: none; }
     }
 
     /* ===== NAVBAR ===== */
