@@ -2,7 +2,7 @@
    Effos Digital — Dados do site (fonte única de verdade)
    Usado pela landing (index.html) e pelo painel admin.
    Persistência: localStorage (mesma origem/domínio).
-   Gerado pelo painel admin em 02/07/2026, 00:06:35.
+   Gerado pelo painel admin em 02/07/2026, 01:29:37.
    ========================================================= */
 
 const EFFOS_STORAGE_KEY = 'effos_site_data_v1';
@@ -16,7 +16,7 @@ const EFFOS_DEFAULT_DATA = {
     "logo": "assets/images/logo.png"
   },
   "hero": {
-    "badge": "Seu parceiro #1 em Automação IA em vendas.",
+    "badge": "Seu parceiro #1 em Automação IA.",
     "titleLine1": "Seu negócio no",
     "titleAccent": "piloto automático",
     "titleLine2": "com IA real.",
